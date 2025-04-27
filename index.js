@@ -1,4 +1,4 @@
-require('./server.js'); // Keep-alive server for Render
+require('./server.js'); // Keep-alive server
 
 const { Client, GatewayIntentBits, Events, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const fs = require('fs');
@@ -25,11 +25,16 @@ let slackTop = 10;
 let freePasses = 0;
 
 const tasks = {
-  1: "Clean something for 5 minutes",
-  2: "Reply to one message",
-  3: "Do one small chore",
-  4: "Write 100 words or brainstorm",
-  5: "Drink water and stretch"
+  1: "Read something for 5 minutes",
+  2: "Drink water and take a walk (even inside!)",
+  3: "Do the task.",
+  4: "Do the task.",
+  5: "Do something you've been putting off",
+  6: "Do the task.",
+  7: "Write 100 words or journal",
+  8: "Do the task.",
+  9: "Do the task.",
+  10: "Do something that doesn't involve the PC or phone"
 };
 
 // === Helper functions ===
@@ -38,10 +43,10 @@ function rollDice(sides) {
 }
 
 function getTwoDifferentTasks() {
-  let first = rollDice(5);
+  let first = rollDice(10);
   let second;
   do {
-    second = rollDice(5);
+    second = rollDice(10);
   } while (second === first);
   return [first, second];
 }
@@ -113,11 +118,11 @@ client.on(Events.InteractionCreate, async interaction => {
             ephemeral: true
           });
         } else {
-          let d5 = rollDice(5);
-          const reply = `🎲 You rolled a **${d20}**!\nNo slacking! You must do: **${tasks[d5]}**.`;
+          let d10 = rollDice(10);
+          const reply = `🎲 You rolled a **${d20}**!\nNo slacking! You must do: **${tasks[d10]}**.`;
 
           slackTop = 10;
-          logEntry.result = `Did task: ${tasks[d5]}`;
+          logEntry.result = `Did task: ${tasks[d10]}`;
           history.push(logEntry);
           saveHistory();
 
@@ -171,18 +176,18 @@ client.on(Events.InteractionCreate, async interaction => {
       });
     }
     else if (interaction.customId === 'do_task') {
-      let d5 = rollDice(5);
+      let d10 = rollDice(10);
       slackTop = 10;
 
       history.push({
         roll: '-',
-        result: `Chose to do task: ${tasks[d5]}`,
+        result: `Chose to do task: ${tasks[d10]}`,
         timestamp: new Date().toISOString()
       });
       saveHistory();
 
       await interaction.update({
-        content: `🛠️ You chose to do the task: **${tasks[d5]}**.`,
+        content: `🛠️ You chose to do the task: **${tasks[d10]}**.`,
         components: []
       });
     }
