@@ -10,7 +10,7 @@ const commands = [
     .setDescription('View your productivity stats.'),
   new SlashCommandBuilder()
     .setName('log')
-    .setDescription('View your recent roll history.')
+    .setDescription('View your recent roll log.') // <== LOG, not history
 ]
 .map(command => command.toJSON());
 
