@@ -1,4 +1,4 @@
-require('./server.js'); // Keep-alive server
+require('./server.js'); // Keep-alive server for Render
 
 const { Client, GatewayIntentBits, Events, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const fs = require('fs');
@@ -146,14 +146,14 @@ client.on(Events.InteractionCreate, async interaction => {
       await interaction.reply({ content: statsMessage, ephemeral: true });
     }
 
-    else if (interaction.commandName === 'history') {
+    else if (interaction.commandName === 'log') {
       if (history.length === 0) {
         await interaction.reply({ content: "No rolls yet! 🎲", ephemeral: true });
         return;
       }
 
       let recentHistory = history.slice(-10).map((h, i) =>
-        `#${history.length - 9 + i}: 🎲 Rolled **${h.roll}** → ${h.result}\n🕒 **Time:** ${new Date(h.timestamp).toLocaleString()}`
+        `#${history.length - 9 + i}: 🎲 Rolled **${h.roll}** → ${h.result}\n🕒 **Time:** ${new Date(h.timestamp).toLocaleString('en-US', { timeZone: 'America/Chicago' })}`
       ).join('\n\n');
 
       await interaction.reply({ content: `📜 **Recent Rolls:**\n${recentHistory}`, ephemeral: true });
