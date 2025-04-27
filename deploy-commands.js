@@ -9,7 +9,7 @@ const commands = [
     .setName('stats')
     .setDescription('View your productivity stats.'),
   new SlashCommandBuilder()
-    .setName('journal')
+    .setName('log')
     .setDescription('View your recent roll history.')
 ]
 .map(command => command.toJSON());
